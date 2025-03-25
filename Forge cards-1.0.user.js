@@ -2,7 +2,7 @@
 // @name         Forge cards
 // @namespace    http://tampermonkey.net/
 // @version      1.0
-// @description  Информация о картах, need / trade / want list
+// @description  Изменение оформления переплаки
 // @author       George
 // @match        https://animestars.org/cards_remelt/*
 // @match        https://astars.club/cards_remelt/*
