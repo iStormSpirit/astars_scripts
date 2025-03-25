@@ -2,7 +2,7 @@
 // @name         Блокировка разблокировка карт 3
 // @namespace    http://tampermonkey.net/
 // @version      3.0
-// @description  Автоматически нажимает на кнопки блокировки карт
+// @description  Добавляет кнопки блокировки разблокировки карт для текущей странички
 // @author       George
 // @match        https://asstars.tv/user/*/cards/*
 // @match        https://animestars.org/user/*/cards/*
