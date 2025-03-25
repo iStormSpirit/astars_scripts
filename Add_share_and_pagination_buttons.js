@@ -9,7 +9,6 @@
 // @match        https://astars.club/user/*/cards/*
 // @match        https://asstars1.astars.club/user/*/cards/*
 // @match        https://as1.astars.club/user/*/cards/*
-// @match        https://asstars.tv/user/*/cards/*
 // @grant        none
 // ==/UserScript==
 
