@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Auto Refresh and Donate Cards (with Activation)
+// @name         Auto Refresh and Donate
 // @namespace    http://tampermonkey.net/
-// @version      2.0
-// @description  Автоматизация обновления и внесения карт (включается кнопкой).
+// @version      1.0
+// @description  Автоматизация донатов
 // @author       George
 // @match        https://animestars.org/clubs/6/boost/
 // @match        https://astars.club/clubs/6/boost/

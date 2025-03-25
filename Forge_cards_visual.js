@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Forge cards
+// @name         Forge cards visual
 // @namespace    http://tampermonkey.net/
 // @version      1.0
-// @description  Изменение оформления переплаки
+// @description  Изменяет визуальный вид переплавки карт
 // @author       George
 // @match        https://animestars.org/cards_remelt/*
 // @match        https://astars.club/cards_remelt/*

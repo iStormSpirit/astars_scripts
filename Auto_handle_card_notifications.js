@@ -2,7 +2,7 @@
 // @name         Auto Handle Card Notifications
 // @namespace    http://tampermonkey.net/
 // @version      1.0
-// @description  Automatically clicks card notifications and closes card modals after clicking a button.
+// @description  При активации скрипта автоматически подбирает выпавшие карты за просмотр
 // @author       George
 // @match        https://animestars.org/aniserials/video/*
 // @match        https://astars.club/aniserials/video/*

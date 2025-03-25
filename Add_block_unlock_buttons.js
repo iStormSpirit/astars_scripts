@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Блокировка разблокировка карт 3
+// @name         Block Unlock buttons
 // @namespace    http://tampermonkey.net/
-// @version      3.0
-// @description  Добавляет кнопки блокировки разблокировки карт для текущей странички
+// @version      1.0
+// @description  Добавляет кнопки для блокировки и разблокировки всех карт на текущей страничке
 // @author       George
 // @match        https://asstars.tv/user/*/cards/*
 // @match        https://animestars.org/user/*/cards/*

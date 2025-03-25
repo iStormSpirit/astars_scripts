@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Delete cards buttuns
+// @name         Delete cards buttons
 // @namespace    http://tampermonkey.net/
 // @version      1.0
-// @description  Delete card on page by list
+// @description  Добавляет кнопку со значком корзины для очистки всех карт из листа желаний на страничке хочу/не хочу
 // @author       George
 // @match        https://asstars.tv/user/*/cards/*
 // @match        https://animestars.org/user/*/cards/*

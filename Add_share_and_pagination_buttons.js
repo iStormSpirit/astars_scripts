@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Auto Click "Выложить" 3 с добавлением иконки пагинации
+// @name         Share all buttons
 // @namespace    http://tampermonkey.net/
-// @version      2.0
-// @description  Автоматически нажимает кнопки "Готов поменять" с подстановкой data-id и задержкой, добавляет кнопку пагинации с иконкой
+// @version      1.0
+// @description  Автоматически нажимает кнопки "Готов поменять" для всех карт на текущей страничке (иконка выгрузки), добавляет кнопку пагинации вверху (иконка стрелка)
 // @author       George
 // @match        https://asstars.tv/user/*/cards/*
 // @match        https://animestars.org/user/*/cards/*
