@@ -360,7 +360,7 @@
       console.error("Скрипт остановлен из-за отсутствия базовой ссылки.");
       return;
     }
-    const v58 = document.querySelector(".lgnlgn_ava img");
+    const v58 = document.querySelector(".lgn_ava img");
     if (!v58) {
       console.log("Аватар пользователя не найден.");
       return;
