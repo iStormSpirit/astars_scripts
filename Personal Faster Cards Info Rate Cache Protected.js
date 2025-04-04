@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Personal Cards Info Rate Cache Protected
+// @name         Personal Faster Cards Info Rate Cache Protected
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      1.3
 // @description  Информация о картах, need / trade / want list
 // @author       George
 // @match        https://animestars.org/*
@@ -238,7 +238,7 @@
   }
   async function f17() {
     let v27 = document.querySelectorAll(".anime-cards__item-wrapper");
-    let vLN7 = 7;
+    let vLN7 = 14;
     let vA2 = [];
     for (let vLN02 = 0; vLN02 < v27.length; vLN02 += vLN7) {
       let v28 = Array.from(v27).slice(vLN02, vLN02 + vLN7);
@@ -248,13 +248,13 @@
         let v32 = vLS + "cards/" + v30 + "/users/trade/";
         f12(v29, v31, v32, vA2);
       }
-      await f6(2500);
+      await f6(100);
     }
     await Promise.all(vA2);
   }
   async function f18() {
     let v33 = document.querySelectorAll(".anime-cards--full-page .anime-cards__item-wrapper");
-    let vLN72 = 7;
+    let vLN72 = 14;
     let vA3 = [];
     for (let vLN03 = 0; vLN03 < v33.length; vLN03 += vLN72) {
       let v34 = Array.from(v33).slice(vLN03, vLN03 + vLN72);
@@ -264,7 +264,7 @@
         let v38 = vLS + "cards/" + v36 + "/users/trade/";
         f12(v35, v37, v38, vA3);
       }
-      await f6(2500);
+      await f6(100);
     }
     await Promise.all(vA3);
   }
@@ -285,7 +285,7 @@
           v41.classList.add("anime-cards__wanted-by-user");
         }
       }
-      await f6(2500);
+      await f6(100);
     }
     await Promise.all(vA4);
   }
@@ -305,7 +305,7 @@
           v48.classList.add("anime-cards__wanted-by-user");
         }
       }
-      await f6(2500);
+      await f6(100);
     }
     await Promise.all(vA5);
   }
