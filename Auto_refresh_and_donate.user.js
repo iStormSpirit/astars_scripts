@@ -10,8 +10,6 @@
 // @match        https://as1.astars.club/clubs/6/boost/
 // @match        https://asstars.tv/clubs/6/boost/
 // @grant        none
-// @updateURL    https://raw.githubusercontent.com/iStormSpirit/astars_scripts/refs/heads/master/Auto_refresh_and_donate.js
-// @downloadURL  https://raw.githubusercontent.com/iStormSpirit/astars_scripts/refs/heads/master/Auto_refresh_and_donate.js
 // ==/UserScript==
 
 (function () {
@@ -68,7 +66,7 @@
     setInterval(() => {
         if (isActivated) {
             refreshCard();
-            setTimeout(donateCard, 10);
+            setTimeout(donateCard, 5);
         }
     }, 10);
 })();
