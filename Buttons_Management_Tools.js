@@ -33,21 +33,44 @@
     function addShareButton() {
         const tabMenu = document.querySelector('.tabs__nav.tab__menu.tab_menu_fon');
         if (tabMenu && !document.querySelector('.share-all-btn')) {
-            let uploadButton = document.createElement('button');
-            uploadButton.classList.add('tabs__item', 'share-all-btn');
-            uploadButton.innerHTML = '<i class="fal fa-upload"></i>';
-            tabMenu.appendChild(uploadButton);
+            const shareButton = document.createElement('button');
+            shareButton.classList.add('tabs__item', 'share-all-btn');
+            shareButton.innerHTML = '<i class="fal fa-arrow-right-arrow-left></i>';
+            tabMenu.appendChild(shareButton);
 
-            uploadButton.addEventListener('click', () => {
-                document.querySelectorAll('.anime-cards__item.show-trade_button').forEach(el => {
-                    let id = el.getAttribute('data-id');
-                    if (id) {
-                        let button = document.createElement('button');
-                        button.setAttribute('data-id', id);
-                        button.setAttribute('onclick', 'ProposeAdd.call(this); return false;');
-                        setTimeout(() => button.click(), 1100);
+            shareButton.addEventListener('click', () => {
+                // Собираем уникальные data-id
+                const elements = document.querySelectorAll('.anime-cards__item.show-trade_button');
+                const dataIds = [...new Set(Array.from(elements).map(el => el.getAttribute('data-id')))];
+
+                // Рекурсивная функция с задержкой
+                function processNext(index = 0) {
+                    if (index >= dataIds.length) return;
+
+                    const id = dataIds[index];
+                    if (!id) {
+                        processNext(index + 1);
+                        return;
                     }
-                });
+
+                    // Создаем виртуальную кнопку
+                    const button = document.createElement('button');
+                    button.setAttribute('data-id', id);
+                    button.setAttribute('data-type', '1'); // Добавляем data-type из примера
+                    button.setAttribute('onclick', 'ProposeAdd.call(this); return false;');
+
+                    console.log(`Добавление карты ${id} (${index + 1}/${dataIds.length})`);
+
+                    // Кликаем с задержкой перед следующим вызовом
+                    setTimeout(() => {
+                        button.click();
+                        processNext(index + 1);
+                    }, 1100); // Задержка как в оригинальном примере
+                }
+
+                // Запускаем обработку
+                console.log(`Найдено карт для добавления: ${dataIds.length}`);
+                processNext(0);
             });
         }
     }
