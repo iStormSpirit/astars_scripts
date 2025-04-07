@@ -4,11 +4,11 @@
 // @version      1.0
 // @description  Автоматизация донатов, отключение звука при донате
 // @author       George
-// @match        https://animestars.org/clubs/6/boost/
-// @match        https://astars.club/clubs/6/boost/
-// @match        https://asstars1.astars.club/clubs/6/boost/
-// @match        https://as1.astars.club/clubs/6/boost/
 // @match        https://asstars.tv/clubs/6/boost/
+// @match        https://astars.club/clubs/6/boost/
+// @match        https://animestars.org/clubs/6/boost/
+// @match        https://as1.astars.club/clubs/6/boost/
+// @match        https://asstars1.astars.club/clubs/6/boost/
 // @grant        none
 // @updateURL    https://raw.githubusercontent.com/iStormSpirit/astars_scripts/master/Auto_refresh_and_donate.user.js
 // @downloadURL  https://raw.githubusercontent.com/iStormSpirit/astars_scripts/master/Auto_refresh_and_donate.user.js

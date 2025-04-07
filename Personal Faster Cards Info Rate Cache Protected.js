@@ -4,11 +4,11 @@
 // @version      1.3
 // @description  Информация о картах, need / trade / want list
 // @author       George
-// @match        https://animestars.org/*
-// @match        https://astars.club/*
-// @match        https://asstars1.astars.club/*
-// @match        https://as1.astars.club/*
 // @match        https://asstars.tv/*
+// @match        https://astars.club/*
+// @match        https://animestars.org/*
+// @match        https://as1.astars.club/*
+// @match        https://asstars1.astars.club/*
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
 

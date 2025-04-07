@@ -4,11 +4,11 @@
 // @version      1.0
 // @description  Автоматически нажимает уведомления и закрывает карточные окна. Можно включать/выключать кнопкой.
 // @author       George
-// @match        https://animestars.org/aniserials/video/*
-// @match        https://astars.club/aniserials/video/*
-// @match        https://asstars1.astars.club/aniserials/video/*
-// @match        https://as1.astars.club/aniserials/video/*
 // @match        https://asstars.tv/aniserials/video/*
+// @match        https://astars.club/aniserials/video/*
+// @match        https://animestars.org/aniserials/video/*
+// @match        https://as1.astars.club/aniserials/video/*
+// @match        https://asstars1.astars.club/aniserials/video/*
 // @grant        none
 // ==/UserScript==
 

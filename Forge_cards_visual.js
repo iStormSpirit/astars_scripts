@@ -4,11 +4,11 @@
 // @version      1.0
 // @description  Изменяет визуальный вид переплавки карт
 // @author       George
-// @match        https://animestars.org/cards_remelt/*
-// @match        https://astars.club/cards_remelt/*
-// @match        https://asstars1.astars.club/cards_remelt/*
-// @match        https://as1.astars.club/cards_remelt/*
 // @match        https://asstars.tv/cards_remelt/*
+// @match        https://astars.club/cards_remelt/*
+// @match        https://animestars.org/cards_remelt/*
+// @match        https://as1.astars.club/cards_remelt/*
+// @match        https://asstars1.astars.club/cards_remelt/*
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
 

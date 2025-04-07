@@ -4,11 +4,12 @@
 // @version      1.0
 // @description  Подсчитывает и показывает кол-во потраченных камней духа за все время на страничке с историей трат
 // @author       George
-// @match        https://animestars.org/transactions/*
-// @match        https://astars.club/transactions/*
-// @match        https://asstars1.astars.club/transactions/*
-// @match        https://as1.astars.club/transactions/*
 // @match        https://asstars.tv/transactions/*
+// @match        https://astars.club/transactions/*
+// @match        https://animestars.org/transactions/*
+// @match        https://as1.astars.club/transactions/*
+// @match        https://asstars1.astars.club/transactions/*
+
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // ==/UserScript==
