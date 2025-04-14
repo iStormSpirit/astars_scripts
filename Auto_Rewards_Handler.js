@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Auto Rewards Handler
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  Auto-claim rewards
 // @author       George
 // @match        https://asstars.tv/*
@@ -13,6 +13,8 @@
 // ==/UserScript==
 
 const DELAY = 40;
+let currentTime = 0;
+const VIDEO_DURATION = 1440;
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 function getCurrentDomain() {
@@ -51,6 +53,51 @@ function showNotification(message) {
     setTimeout(() => notification.remove(), 3000);
 }
 
+
+function simulateWatching() {
+    const userHash = window.dle_login_hash;
+    if (!userHash) return;
+
+    const currentDomain = window.location.origin;
+    currentTime += 30;
+    if (currentTime > VIDEO_DURATION) currentTime = 30;
+
+    fetch(`${currentDomain}/engine/ajax/controller.php`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json, text/javascript, */*; q=0.01',
+            'Sec-Fetch-Site': 'same-origin',
+            'Sec-Fetch-Mode': 'cors'
+        },
+        body: new URLSearchParams({
+            mod: 'user_count_timer',
+            user_hash: userHash,
+            time: currentTime.toString(),
+            duration: VIDEO_DURATION.toString(),
+            episode: '1',
+            watch: '1'
+        })
+    });
+
+    fetch(`${currentDomain}/engine/ajax/controller.php`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json, text/javascript, */*; q=0.01'
+        },
+        body: new URLSearchParams({
+            mod: 'reward_card',
+            action: 'check_reward',
+            user_hash: userHash,
+            time: currentTime.toString(),
+            duration: VIDEO_DURATION.toString()
+        })
+    });
+}
+
 async function checkGiftCard(doc) {
     const button = doc.querySelector('#gift-icon');
     if (!button) return;
@@ -73,7 +120,8 @@ async function checkGiftCard(doc) {
             showNotification(data.text);
             button.remove();
         }
-    } catch (error) {}
+    } catch (error) {
+    }
 }
 
 function checkNewCard() {
@@ -104,10 +152,11 @@ function checkNewCard() {
                 });
             }
         })
-        .catch(() => {});
+        .catch(() => {
+        });
 }
 
-(function() {
+(function () {
     'use strict';
 
     let lastActiveTime = localStorage.getItem('lastCrystalTime') || "00:00";
@@ -138,7 +187,7 @@ function checkNewCard() {
         worker = new Worker(URL.createObjectURL(new Blob([workerCode])));
 
         worker.onmessage = e => {
-            switch(e.data.type) {
+            switch (e.data.type) {
                 case 'checkCrystal':
                     document.querySelectorAll(".lc_chat_li").forEach(msg => {
                         const crystalId = getCrystalId(msg);
@@ -163,21 +212,25 @@ function checkNewCard() {
 
     function autoRepeatCheck() {
         checkGiftCard(document);
-        Audio.prototype.play = () => new Promise(() => {});
+        Audio.prototype.play = () => new Promise(() => {
+        });
     }
 
     function initializeScript() {
         initializeWorker();
         worker.postMessage({action: 'start'});
+        setInterval(simulateWatching, 30000);
 
         setInterval(() => {
             autoRepeatCheck();
             checkNewCard();
         }, 5000);
+        setInterval(simulateWatching, 30000);
 
         setInterval(() => {
             fetch(`${getCurrentDomain()}/engine/ajax/controller.php?mod=user_count_timer&user_hash=${window.dle_login_hash}`)
-                .catch(() => {});
+                .catch(() => {
+                });
         }, 31000);
     }
 
