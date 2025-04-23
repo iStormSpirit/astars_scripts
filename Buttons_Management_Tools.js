@@ -1,14 +1,16 @@
 // ==UserScript==
 // @name         Buttons Management Tools
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  Adds buttons: delete cards, lock all cards, unlock all cards, share all cards, pagination navigation, clear search
 // @author       George
 // @match        https://asstars.tv/user/*/cards/*
-// @match        https://astars.club/user/*/cards/*
 // @match        https://animestars.org/user/*/cards/*
-// @match        https://as1.astars.club/user/*/cards/*
+// @match        https://astars.club/user/*/cards/*
 // @match        https://asstars1.astars.club/user/*/cards/*
+// @match        https://as1.astars.club/user/*/cards/*
+// @updateURL    https://github.com/iStormSpirit/astars_scripts/blob/master/Buttons_Management_Tools.js
+// @downloadURL  https://github.com/iStormSpirit/astars_scripts/blob/master/Buttons_Management_Tools.js
 // @grant        none
 // ==/UserScript==
 
@@ -30,12 +32,13 @@
         }
     }
 
+
     function addShareButton() {
         const tabMenu = document.querySelector('.tabs__nav.tab__menu.tab_menu_fon');
         if (tabMenu && !document.querySelector('.share-all-btn')) {
             const shareButton = document.createElement('button');
             shareButton.classList.add('tabs__item', 'share-all-btn');
-            shareButton.innerHTML = '<i class="fal fa-arrow-right-arrow-left></i>';
+            shareButton.innerHTML = '<i class="fal fa-arrow-right-arrow-left"></i>';
             tabMenu.appendChild(shareButton);
 
             shareButton.addEventListener('click', () => {
@@ -49,7 +52,7 @@
 
                     const id = dataIds[index];
                     if (!id) {
-                        processNext(index + 1);
+                        processNext(index + 2);
                         return;
                     }
 
@@ -74,7 +77,6 @@
             });
         }
     }
-
     function addPaginationNextButton() {
         let paginationButton = document.querySelector('.pagination__pages-btn a');
         if (paginationButton && !document.querySelector('.pagination-btn')) {
@@ -94,7 +96,7 @@
         }
     }
 
-    function addPaginationPrevButton() {
+    function addPaginationPrevButton222() {
         if (document.querySelector('.pagination-prev-btn')) {
             return;
         }
@@ -137,6 +139,90 @@
 
         }
     }
+
+    // Добавляет кнопку назад
+    function addPaginationPrevButton() {
+        console.log('--- Start addPaginationPrevButton function ---');
+
+        // Проверка существования кнопки
+        if (document.querySelector('.pagination-prev-btn')) {
+            console.log('Кнопка "Назад" уже существует, прекращаем выполнение');
+            return;
+        }
+
+        // Находим текущую страницу
+        const currentPageSpan = document.querySelector('.pagination__pages span:not(.nav_ext)');
+        console.log('Найден элемент текущей страницы:', currentPageSpan);
+
+        if (!currentPageSpan) {
+            console.log('Элемент текущей страницы не найден, прекращаем выполнение');
+            return;
+        }
+
+        const currentPage = parseInt(currentPageSpan.textContent);
+        console.log('Текущая страница:', currentPage);
+
+        if (isNaN(currentPage)) {
+            console.log('Не удалось распознать номер страницы, прекращаем выполнение');
+            return;
+        }
+
+        if (currentPage <= 1) {
+            console.log('Текущая страница 1 или меньше, кнопка "Назад" не нужна');
+            return;
+        }
+
+        // Формируем URL
+        const baseUrl = window.location.href.replace(/\/page\/\d+\/$/, '/');
+        console.log('Базовый URL:', baseUrl);
+
+        let prevPageUrl;
+        if (currentPage === 2) {
+            prevPageUrl = baseUrl;
+            console.log('Предыдущая страница - главная:', prevPageUrl);
+        } else {
+            prevPageUrl = baseUrl.replace(/\/$/, `/page/${currentPage - 1}/`);
+            console.log('Предыдущая страница:', prevPageUrl);
+        }
+
+        // Создаем кнопку
+        let paginationPrevButton = document.createElement('button');
+        paginationPrevButton.classList.add('tabs__item', 'pagination-prev-btn');
+        paginationPrevButton.innerHTML = '<i class="fal fa-long-arrow-left"></i>';
+        console.log('Кнопка "Назад" создана');
+
+        // Добавляем обработчик клика
+        paginationPrevButton.addEventListener('click', () => {
+            console.log('Кнопка "Назад" нажата, переход по URL:', prevPageUrl);
+            window.location.href = prevPageUrl;
+        });
+
+        // Вставляем кнопку в DOM
+        let sortBlock = document.querySelector('.sort-block.sort-block--btn');
+        console.log('Блок сортировки найден:', sortBlock);
+
+        if (sortBlock) {
+            const nextBtn = sortBlock.querySelector('.pagination-btn');
+            console.log('Кнопка "Вперед" найдена:', nextBtn);
+
+            if (nextBtn) {
+                sortBlock.insertBefore(paginationPrevButton, nextBtn);
+                console.log('Кнопка "Назад" вставлена перед кнопкой "Вперед"');
+            } else {
+                sortBlock.appendChild(paginationPrevButton);
+                console.log('Кнопка "Назад" добавлена в конец блока сортировки');
+            }
+
+            paginationPrevButton.style.marginLeft = '10px';
+            paginationPrevButton.style.display = 'inline-flex';
+            console.log('Стили для кнопки применены');
+        } else {
+            console.log('Блок сортировки не найден, кнопка не добавлена');
+        }
+
+        console.log('--- End addPaginationPrevButton function ---');
+    }
+
 
     function lockCards() {
         let buttons = document.querySelectorAll('.lock-card-btn i.fa-unlock');
