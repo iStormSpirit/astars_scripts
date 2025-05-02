@@ -275,12 +275,18 @@
         let batchSize = 14;
         let promises = [];
 
+        const wantCards = getWantCardFromCache('want_card');
+
         for (let i = 0; i < cards.length; i += batchSize) {
             let batch = Array.from(cards).slice(i, i + batchSize);
 
             for (let card of batch) {
                 let cardId = card.querySelector('.anime-cards__item').getAttribute('data-id');
                 let cardUrl = `${baseUrl}cards/${cardId}/users/`;
+                if (wantCards && wantCards.includes(cardId)) {
+                    card.classList.add('anime-cards__wanted-by-user');
+                }
+
                 processItem(card, cardUrl, promises);
             }
             await delay(DELAY_REQUEST);
