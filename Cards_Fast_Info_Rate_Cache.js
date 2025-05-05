@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cards Fast Info Rate Cache
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  Информация о картах для обновленного сайта, need / have / trade / want list
 // @description  Отображение: профиль, карты, обмен, история обмена, паки карт, все карты из анимэ. библиотке карт
 // @author       George
