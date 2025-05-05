@@ -283,6 +283,7 @@
             for (let card of batch) {
                 let cardId = card.querySelector('.anime-cards__item').getAttribute('data-id');
                 let cardUrl = `${baseUrl}cards/${cardId}/users/`;
+                // Добавляем проверку на желаемую карту
                 if (wantCards && wantCards.includes(cardId)) {
                     card.classList.add('anime-cards__wanted-by-user');
                 }
@@ -413,6 +414,7 @@
         }
 
         const promises = [];
+        const wantCards = getWantCardFromCache('want_card'); // Получаем список желаемых карт
 
         for (const card of lootboxCards) {
             const cardId = card.getAttribute('data-id');
@@ -435,6 +437,15 @@
 
             // Используем стандартный processItem как во всем коде
             processItem(card, cardUrl, promises);
+
+            // Добавляем или удаляем класс в зависимости от наличия карты в want_card
+            if (wantCards && wantCards.includes(cardId)) {
+                card.classList.add('anime-cards__wanted-by-user');
+                console.log(`[Lootbox] Карта ${cardId} в списке желаемых - добавляем рамку`);
+            } else {
+                card.classList.remove('anime-cards__wanted-by-user');
+                console.log(`[Lootbox] Карта ${cardId} НЕ в списке желаемых - удаляем рамку`);
+            }
 
             await delay(DELAY_REQUEST);
         }
