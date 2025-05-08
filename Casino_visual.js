@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Casino visual
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  Изменяет визуальный вид паков карт (удаляет хуйню и делает его адекватным)
 // @author       George
 // @match        https://asstars.tv/cards/pack/
@@ -14,6 +14,13 @@
 
 (function() {
     'use strict';
+    const observer = new MutationObserver(() => {
+        document.querySelectorAll('.lootbox__list').forEach(el => {
+            el.classList.remove('step1', 'step2', 'step3'); // Удаляем классы анимации
+        });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
 
     window.addEventListener('load', function() {
         const lootboxImages = document.querySelector('.lootbox__images');
