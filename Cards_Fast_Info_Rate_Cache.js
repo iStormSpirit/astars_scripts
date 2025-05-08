@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Cards Fast Info Rate Cache
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.5
 // @description  Информация о картах для обновленного сайта, need / have / trade / want list
-// @description  Отображение: профиль, карты, обмен, история обмена, паки карт, все карты из анимэ. библиотке карт
+// @description  Отображение: профиль, карты, обмен, история обмена, паки карт, все карты из анимэ. библиотке карт, обновление списка желаемого.
 // @author       George
 // @match        https://asstars.tv/*
 // @match        https://astars.club/*
@@ -18,8 +18,10 @@
 
     let baseUrl = '';
     const CACHE_EXPIRATION_TIME = 60 * 60 * 1000; // 1 час в миллисекундах
-    const WANT_CARD_CACHE_EXPIRATION_TIME = 15 * 60 * 1000; // 15 минут в миллисекундах
+    const WANT_CARD_CACHE_EXPIRATION_TIME = 60 * 60 * 1000; // 15 минут в миллисекундах
     const DELAY_REQUEST = 100
+    const DELAY_REQUEST_FULL_CARDS = 500
+    const BATCH_SIZE = 14
 
     function saveToCache(key, data, expirationTime) {
         const cacheData = {
@@ -86,6 +88,53 @@
         } else {
             console.error('Базовая ссылка не найдена.');
         }
+    }
+
+    function createUpdateButton() {
+        const button = document.createElement('button');
+        button.id = 'want-card-update-btn';
+        button.textContent = 'WANT CARD UPD';
+        button.style.position = 'fixed';
+        button.style.bottom = '20px';
+        button.style.left = '20px';
+        button.style.zIndex = '9999';
+        button.style.padding = '8px 12px';
+        button.style.backgroundColor = 'rgba(128, 128, 128, 0.7)';
+        button.style.color = 'white';
+        button.style.border = 'none';
+        button.style.borderRadius = '5px';
+        button.style.cursor = 'pointer';
+        button.style.fontSize = '12px';
+        button.style.transition = 'background-color 0.3s ease';
+
+        button.addEventListener('click', async function () {
+            // Удаляем кэш want_card
+            localStorage.removeItem('want_card');
+
+            // Меняем цвет кнопки на желтый (обновление в процессе)
+            button.style.backgroundColor = 'rgba(255, 255, 0, 0.7)';
+            button.textContent = 'WANT CARD UPDATING...';
+
+            const userAvatar = document.querySelector(".lgn__ava img");
+            if (userAvatar) {
+                const currentUsername = userAvatar.getAttribute('title');
+                if (currentUsername) {
+                    const userProfileUrl = `${baseUrl}user/${currentUsername}/`;
+                    await fetchAllWantCards(userProfileUrl);
+
+                    // После завершения обновления меняем цвет на зеленый на 3 секунды
+                    button.style.backgroundColor = 'rgba(0, 255, 0, 0.7)';
+                    button.textContent = 'WANT CARD UPDATED!';
+
+                    setTimeout(() => {
+                        button.style.backgroundColor = 'rgba(128, 128, 128, 0.7)';
+                        button.textContent = 'WANT CARD UPD';
+                    }, 3000);
+                }
+            }
+        });
+
+        document.body.appendChild(button);
     }
 
     function createInfoContainer() {
@@ -272,7 +321,7 @@
     // Асинхронная функция для обновления информации о картах с задержкой
     async function updateCardInfo() {
         let cards = document.querySelectorAll('.anime-cards__item-wrapper');
-        let batchSize = 14;
+        let batchSize = BATCH_SIZE;
         let promises = [];
 
         const wantCards = getWantCardFromCache('want_card');
@@ -283,7 +332,7 @@
             for (let card of batch) {
                 let cardId = card.querySelector('.anime-cards__item').getAttribute('data-id');
                 let cardUrl = `${baseUrl}cards/${cardId}/users/`;
-                // Добавляем проверку на желаемую карту
+
                 if (wantCards && wantCards.includes(cardId)) {
                     card.classList.add('anime-cards__wanted-by-user');
                 }
@@ -298,7 +347,7 @@
     // Асинхронная функция для обновления информации о картах в блоке anime-cards--full-page
     async function updateFullPageCardsInfo() {
         let fullPageCards = document.querySelectorAll('.anime-cards--full-page .anime-cards__item-wrapper');
-        let batchSize = 14;
+        let batchSize = BATCH_SIZE;
         let promises = [];
 
         for (let i = 0; i < fullPageCards.length; i += batchSize) {
@@ -318,7 +367,7 @@
     // Асинхронная функция для обновления информации о предметах обмена
     async function updateTradeItemsInfo() {
         let tradeItems = document.querySelectorAll('.trade__main-items a');
-        let batchSize = 14; // Размер пакета
+        let batchSize = BATCH_SIZE; // Размер пакета
         let promises = [];
 
         for (let i = 0; i < tradeItems.length; i += batchSize) {
@@ -469,13 +518,22 @@
             event.preventDefault(); // Отменяем стандартное поведение
             console.log('Клик по "Все карты из аниме". Обновляем информацию...');
 
-            await delay(500); // Задержка для появления блока
+            await delay(DELAY_REQUEST_FULL_CARDS); // Задержка для появления блока
             await updateFullPageCardsInfo(); // Обновляем информацию о картах
         });
     }
 
     // Асинхронная функция для сбора всех data-id карт, которые пользователь хочет
     async function fetchAllWantCards(userProfileUrl) {
+
+        const cachedWantCards = localStorage.getItem("want_card")
+
+        if (cachedWantCards !== null && cachedWantCards.length > 0) {
+            console.log("Пропуск загрузки want_card — данные актуальны");
+            return;
+        }
+
+        console.log("Загрузка want_card...");
         let wantCards = [];
         let currentPage = 1;
 
@@ -508,7 +566,7 @@
                 });
             });
         }
-
+        console.log("Все want_card загружены");
         return await fetchPage(`${userProfileUrl}cards/need/page/${currentPage}/`);
     }
 
@@ -521,7 +579,6 @@
             return;
         }
 
-        // Получаем имя пользователя из атрибута title элемента .lgn__ava img
         const userAvatar = document.querySelector(".lgn__ava img");
         if (!userAvatar) {
             console.log('Аватар пользователя не найден.');
@@ -535,6 +592,7 @@
         }
 
         observeThemeChanges();
+        createUpdateButton();
 
         const userProfileUrl = `${baseUrl}user/${currentUsername}/`;
         await fetchAllWantCards(userProfileUrl);
