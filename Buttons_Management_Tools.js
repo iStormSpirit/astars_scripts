@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Buttons Management Tools
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      1.3
 // @description  Adds buttons: delete cards, lock all cards, unlock all cards, share all cards, pagination navigation, clear search
 // @author       George
 // @match        https://asstars.tv/user/*/cards/*
@@ -9,8 +9,7 @@
 // @match        https://astars.club/user/*/cards/*
 // @match        https://asstars1.astars.club/user/*/cards/*
 // @match        https://as1.astars.club/user/*/cards/*
-// @updateURL    https://github.com/iStormSpirit/astars_scripts/blob/master/Buttons_Management_Tools.js
-// @downloadURL  https://github.com/iStormSpirit/astars_scripts/blob/master/Buttons_Management_Tools.js
+
 // @grant        none
 // ==/UserScript==
 
