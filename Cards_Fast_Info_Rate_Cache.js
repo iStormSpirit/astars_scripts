@@ -380,10 +380,10 @@
 
                 processItem(item, cardUrl, promises);
 
-                const wantCards = getWantCardFromCache('want_card');
-                if (wantCards && wantCards.includes(cardId)) {
-                    item.classList.add('anime-cards__wanted-by-user');
-                }
+                // const wantCards = getWantCardFromCache('want_card');
+                // if (wantCards && wantCards.includes(cardId)) {
+                //     item.classList.add('anime-cards__wanted-by-user');
+                // }
             }
             await delay(DELAY_REQUEST);
         }

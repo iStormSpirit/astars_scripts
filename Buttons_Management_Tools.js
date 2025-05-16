@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Buttons Management Tools
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.2
 // @description  Adds buttons: delete cards, lock all cards, unlock all cards, share all cards, pagination navigation, clear search
 // @author       George
 // @match        https://asstars.tv/user/*/cards/*
@@ -32,7 +32,6 @@
         }
     }
 
-
     function addShareButton() {
         const tabMenu = document.querySelector('.tabs__nav.tab__menu.tab_menu_fon');
         if (tabMenu && !document.querySelector('.share-all-btn')) {
@@ -44,7 +43,7 @@
             shareButton.addEventListener('click', () => {
                 // Собираем уникальные data-id
                 const elements = document.querySelectorAll('.anime-cards__item.show-trade_button');
-                const dataIds = [...new Set(Array.from(elements).map(el => el.getAttribute('data-id')))];
+                const dataIds = [...new Set(Array.from(elements).map(el => el.getAttribute('data-owner-id')))];
 
                 // Рекурсивная функция с задержкой
                 function processNext(index = 0) {
@@ -77,6 +76,7 @@
             });
         }
     }
+
     function addPaginationNextButton() {
         let paginationButton = document.querySelector('.pagination__pages-btn a');
         if (paginationButton && !document.querySelector('.pagination-btn')) {
@@ -326,6 +326,13 @@
                     console.log('Форма поиска отправлена');
                 } else {
                     console.warn('Форма поиска не найдена');
+                }
+
+                let currentUrl = new URL(window.location.href);
+                if (currentUrl.searchParams.has('stars')) {
+                    currentUrl.searchParams.delete('stars');
+                    window.location.href = currentUrl.toString();
+                    console.log('URL без stars= загружается:', currentUrl.toString());
                 }
             });
         }
