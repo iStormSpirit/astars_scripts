@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         Cards Fast Info Rate Cache
 // @namespace    http://tampermonkey.net/
-// @version      1.5
+// @version      1.6
 // @description  Информация о картах для обновленного сайта, need / have / trade / want list
 // @description  Отображение: профиль, карты, обмен, история обмена, паки карт, все карты из анимэ. библиотке карт, обновление списка желаемого.
 // @author       George
 // @match        https://asstars.tv/*
+// @match        https://asstars.club/*
 // @match        https://astars.club/*
 // @match        https://animestars.org/*
 // @match        https://as1.astars.club/*
@@ -18,7 +19,7 @@
 
     let baseUrl = '';
     const CACHE_EXPIRATION_TIME = 60 * 60 * 1000; // 1 час в миллисекундах
-    const WANT_CARD_CACHE_EXPIRATION_TIME = 60 * 60 * 1000; // 15 минут в миллисекундах
+    const WANT_CARD_CACHE_EXPIRATION_TIME = 60 * 60 * 1000; // 1 час  в миллисекундах
     const DELAY_REQUEST = 100
     const DELAY_REQUEST_FULL_CARDS = 500
     const BATCH_SIZE = 14
@@ -31,9 +32,9 @@
         localStorage.setItem(key, JSON.stringify(cacheData));
         if (expirationTime) {
             setTimeout(() => {
-                localStorage.removeItem(key); // Удаляем данные по ключу
+                localStorage.removeItem(key);
                 if (key.startsWith('data-id')) {
-                    localStorage.removeItem(key); // Удаляем сам ключ data-id
+                    localStorage.removeItem(key);
                 }
             }, expirationTime);
         }
@@ -47,9 +48,9 @@
         const currentTime = Date.now();
 
         if (currentTime - parsedData.timestamp > CACHE_EXPIRATION_TIME) {
-            localStorage.removeItem(key); // Удаляем устаревшие данные
+            localStorage.removeItem(key);
             if (key.startsWith('data-id')) {
-                localStorage.removeItem(key); // Удаляем сам ключ data-id
+                localStorage.removeItem(key);
             }
             return null;
         }
@@ -65,9 +66,8 @@
         const parsedData = JSON.parse(cachedData);
         const currentTime = Date.now();
 
-        // Проверяем, не истек ли срок годности кэша
         if (currentTime - parsedData.timestamp > WANT_CARD_CACHE_EXPIRATION_TIME) {
-            localStorage.removeItem(key); // Удаляем весь список want_card
+            localStorage.removeItem(key);
             return null;
         }
 
@@ -108,10 +108,8 @@
         button.style.transition = 'background-color 0.3s ease';
 
         button.addEventListener('click', async function () {
-            // Удаляем кэш want_card
             localStorage.removeItem('want_card');
 
-            // Меняем цвет кнопки на желтый (обновление в процессе)
             button.style.backgroundColor = 'rgba(255, 255, 0, 0.7)';
             button.textContent = 'WANT CARD UPDATING...';
 
@@ -122,7 +120,6 @@
                     const userProfileUrl = `${baseUrl}user/${currentUsername}/`;
                     await fetchAllWantCards(userProfileUrl);
 
-                    // После завершения обновления меняем цвет на зеленый на 3 секунды
                     button.style.backgroundColor = 'rgba(0, 255, 0, 0.7)';
                     button.textContent = 'WANT CARD UPDATED!';
 
@@ -199,23 +196,21 @@
         }
     }
 
-    // Функция для проверки, активна ли темная тема
     function isDarkTheme() {
         return document.body.classList.contains('dark-theme');
     }
 
-    // Функция для получения цвета текста в зависимости от темы
     function getTextColor() {
         return isDarkTheme() ? '#ffffff' : '#000000';
     }
 
-    // Функция для обработки элемента и добавления информации
+
     function processItem(item, cardUrl, promises) {
         if (item.querySelector('.info-container')) {
             return;
         }
 
-        let promise = fetchCardData(cardUrl).then(data => { // Изменено здесь
+        let promise = fetchCardData(cardUrl).then(data => {
             let {infoContainer, needContainer, haveContainer, tradeContainer} = createInfoContainer();
             infoContainer.classList.add('info-container');
 
@@ -229,6 +224,18 @@
             needContainer.textContent = `n: ${data.need}`;
             haveContainer.textContent = `h: ${data.have}`;
             tradeContainer.textContent = `t: ${data.trade}`;
+
+            infoContainer.addEventListener('click', async function () {
+                localStorage.removeItem(cardUrl); // Сброс кэша
+
+                const newData = await fetchCardData(cardUrl);
+
+                infoContainer.style.backgroundColor = getBackgroundColor(newData.need, newData.trade);
+
+                needContainer.textContent = `n: ${newData.need}`;
+                haveContainer.textContent = `h: ${newData.have}`;
+                tradeContainer.textContent = `t: ${newData.trade}`;
+            });
 
             item.appendChild(infoContainer);
 
@@ -380,10 +387,6 @@
 
                 processItem(item, cardUrl, promises);
 
-                // const wantCards = getWantCardFromCache('want_card');
-                // if (wantCards && wantCards.includes(cardId)) {
-                //     item.classList.add('anime-cards__wanted-by-user');
-                // }
             }
             await delay(DELAY_REQUEST);
         }
@@ -416,7 +419,6 @@
 
     // Функция для отслеживания изменений в лутбоксе
     function observeLootboxChanges() {
-        // console.log('[Lootbox] Начинаем наблюдение за лутбоксом...');
 
         const lootboxRow = document.querySelector('.lootbox__row');
         if (!lootboxRow) {
@@ -425,7 +427,6 @@
         }
 
         let currentPackId = lootboxRow.getAttribute('data-pack-id');
-        // console.log(`[Lootbox] Текущий pack-id: ${currentPackId}`);
 
         const observer = new MutationObserver(async (mutations) => {
             console.log('[Lootbox] Обнаружены изменения:', mutations);
@@ -434,7 +435,6 @@
             console.log(`[Lootbox] Новый pack-id: ${newPackId}, Старый: ${currentPackId}`);
 
             if (newPackId !== currentPackId) {
-                // console.log('[Lootbox] Обнаружено изменение pack-id, обновляем информацию...');
                 currentPackId = newPackId;
                 await updateLootboxCardsInfo();
             }
@@ -450,12 +450,10 @@
         updateLootboxCardsInfo();
     }
 
-    // Оптимизированная функция для лутбоксов
+    // Асинхронная функция для обновления информации о картах в лутбоксов
     async function updateLootboxCardsInfo() {
-        // console.log('[Lootbox] Запуск обновления информации о картах...');
 
         const lootboxCards = document.querySelectorAll('.lootbox__card');
-        // console.log(`[Lootbox] Найдено карт: ${lootboxCards.length}`);
 
         if (lootboxCards.length === 0) {
             console.log('[Lootbox] Карты не найдены, завершаем обновление');
@@ -467,27 +465,21 @@
 
         for (const card of lootboxCards) {
             const cardId = card.getAttribute('data-id');
-            // console.log(`[Lootbox] Обработка карты с data-id: ${cardId}`);
 
             if (!cardId) {
                 console.log('[Lootbox] Карта без data-id, пропускаем');
                 continue;
             }
 
-            // Удаляем старую информацию если есть
             const oldInfo = card.querySelector('.info-container');
             if (oldInfo) {
-                // console.log('[Lootbox] Удаляем старую информацию');
                 oldInfo.remove();
             }
 
             const cardUrl = `${baseUrl}cards/${cardId}/users/`;
-            // console.log(`[Lootbox] URL для запроса: ${cardUrl}`);
 
-            // Используем стандартный processItem как во всем коде
             processItem(card, cardUrl, promises);
 
-            // Добавляем или удаляем класс в зависимости от наличия карты в want_card
             if (wantCards && wantCards.includes(cardId)) {
                 card.classList.add('anime-cards__wanted-by-user');
                 console.log(`[Lootbox] Карта ${cardId} в списке желаемых - добавляем рамку`);
@@ -509,7 +501,6 @@
         const allAnimeCardsLink = document.querySelector('a.glav-s[onclick*="AllAnimeCards"]');
 
         if (!allAnimeCardsLink) {
-            console.log('Элемент "Все карты из аниме" не найден.');
             return;
         }
 
@@ -518,8 +509,8 @@
             event.preventDefault(); // Отменяем стандартное поведение
             console.log('Клик по "Все карты из аниме". Обновляем информацию...');
 
-            await delay(DELAY_REQUEST_FULL_CARDS); // Задержка для появления блока
-            await updateFullPageCardsInfo(); // Обновляем информацию о картах
+            await delay(DELAY_REQUEST_FULL_CARDS);
+            await updateFullPageCardsInfo();
         });
     }
 
