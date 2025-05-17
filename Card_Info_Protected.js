@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name         Cards Info Rate Cache
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.0a
 // @description  Информация о картах, need / trade / want list
 // @author       George
 // @match        https://asstars.tv/*
+// @match        https://asstars.club/*
 // @match        https://astars.club/*
 // @match        https://animestars.org/*
 // @match        https://as1.astars.club/*

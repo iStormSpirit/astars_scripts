@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name         Auto Refresh and Donate
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.0a
 // @description  Автоматизация донатов, отключение звука при донате
 // @author       George
 // @match        https://asstars.tv/clubs/6/boost/
+// @match        https://asstars.club/clubs/6/boost/
 // @match        https://astars.club/clubs/6/boost/
 // @match        https://animestars.org/clubs/6/boost/
 // @match        https://as1.astars.club/clubs/6/boost/

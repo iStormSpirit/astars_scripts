@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name         History Spending Stones
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.0a
 // @description  Подсчитывает и показывает кол-во потраченных камней духа за все время на страничке с историей трат
 // @author       George
 // @match        https://asstars.tv/transactions/*
+// @match        https://asstars.club/transactions/*
 // @match        https://astars.club/transactions/*
 // @match        https://animestars.org/transactions/*
 // @match        https://as1.astars.club/transactions/*

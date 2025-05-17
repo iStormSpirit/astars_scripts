@@ -1,10 +1,11 @@
 /// ==UserScript==
 // @name         Auto Handle Card Notifications (Toggle)
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.0a
 // @description  Автоматически нажимает уведомления и закрывает карточные окна. Можно включать/выключать кнопкой.
 // @author       George
 // @match        https://asstars.tv/aniserials/video/*
+// @match        https://asstars.club/aniserials/video/*
 // @match        https://astars.club/aniserials/video/*
 // @match        https://animestars.org/aniserials/video/*
 // @match        https://as1.astars.club/aniserials/video/*

@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name         Auto Rewards Handler
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.1a
 // @description  Auto-claim rewards
 // @author       George
 // @match        https://asstars.tv/*
+// @match        https://asstars.club/*
 // @match        https://astars.club/*
 // @match        https://animestars.org/*
 // @match        https://as1.astars.club/*

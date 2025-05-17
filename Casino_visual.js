@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name         Casino visual
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.1a
 // @description  Изменяет визуальный вид паков карт (удаляет хуйню и делает его адекватным)
 // @author       George
 // @match        https://asstars.tv/cards/pack/
+// @match        https://asstars.club/cards/pack/
 // @match        https://astars.club/cards/pack/
 // @match        https://animestars.org/cards/pack/
 // @match        https://as1.astars.club/cards/pack/
