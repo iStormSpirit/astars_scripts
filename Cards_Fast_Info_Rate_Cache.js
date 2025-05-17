@@ -235,6 +235,12 @@
                 needContainer.textContent = `n: ${newData.need}`;
                 haveContainer.textContent = `h: ${newData.have}`;
                 tradeContainer.textContent = `t: ${newData.trade}`;
+
+                infoContainer.classList.add('anime-cards__update-flash');
+                setTimeout(() => {
+                    infoContainer.classList.remove('anime-cards__update-flash');
+                }, 1000);
+
             });
 
             item.appendChild(infoContainer);
@@ -629,6 +635,13 @@
         .anime-cards__wanted-by-user {
             border: 3px solid #1DD300;
             border-radius: 7px;
+        }
+        .anime-cards__update-flash {
+            animation: flash-green 1s ease;
+        }
+        @keyframes flash-green {
+            0%   { background-color: rgba(0, 255, 0, 0.6); }
+            100% { background-color: inherit; }
         }
     `;
     document.head.appendChild(style);
