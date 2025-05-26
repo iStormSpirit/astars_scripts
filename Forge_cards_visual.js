@@ -16,6 +16,8 @@
 (function() {
     'use strict';
 
+    document.querySelector('.remelt__header').remove();
+
     function rearrangeElements() {
         let wrapper = document.querySelector('.remelt__wrapper');
         if (!wrapper) return;
