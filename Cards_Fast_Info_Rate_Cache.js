@@ -6,6 +6,7 @@
 // @description  Отображение: профиль, карты, обмен, история обмена, паки карт, все карты из анимэ. библиотке карт, обновление списка желаемого.
 // @author       George
 // @match        https://asstars.tv/*
+// @match        https://as1.asstars.tv/*
 // @match        https://asstars.club/*
 // @match        https://astars.club/*
 // @match        https://animestars.org/*
@@ -19,7 +20,7 @@
 
     let baseUrl = '';
     const CACHE_EXPIRATION_TIME = 60 * 60 * 1000; // 1 час в миллисекундах
-    const WANT_CARD_CACHE_EXPIRATION_TIME = 60 * 60 * 1000; // 1 час  в миллисекундах
+    const WANT_CARD_CACHE_EXPIRATION_TIME = 60 * 60 * 1000; // 1 час в миллисекундах
     const DELAY_REQUEST = 100
     const DELAY_REQUEST_FULL_CARDS = 500
     const BATCH_SIZE = 14
@@ -286,32 +287,6 @@
         });
     }
 
-    // Функция для отслеживания изменений темы
-    function observeThemeChanges() {
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.attributeName === 'class') {
-                    updateTextColors();
-                }
-            });
-        });
-
-        observer.observe(document.body, {
-            attributes: true // Отслеживаем изменения атрибутов
-        });
-    }
-
-    // Функция для обновления цвета текста во всех контейнерах
-    function updateTextColors() {
-        let textColor = getTextColor();
-        document.querySelectorAll('.info-container').forEach(container => {
-            container.querySelectorAll('div').forEach(div => {
-                div.style.color = textColor;
-            });
-        });
-    }
-
-
     // Асинхронная функция для обновления информации о картах в истории обменов
     async function updateTradeHistoryInfo() {
         let cards = document.querySelectorAll(".history__item .history__body a");
@@ -400,28 +375,6 @@
         await Promise.all(promises);
     }
 
-    // async function updateRemeltInfo() {
-    //     const remeltItems = document.querySelectorAll('.remelt__inventory-item');
-    //     const promises = [];
-    //
-    //     for (const item of remeltItems) {
-    //         const cardId = item.getAttribute('data-card-id');
-    //         const cardUrl = `${baseUrl}cards/${cardId}/users/`;
-    //         console.log(cardUrl);
-    //
-    //         // Добавляем контейнер для информации
-    //         const infoWrapper = document.createElement('div');
-    //         infoWrapper.style.position = 'absolute';
-    //         infoWrapper.style.bottom = '0';
-    //         infoWrapper.style.width = '100%';
-    //         item.style.position = 'relative';
-    //         item.appendChild(infoWrapper);
-    //
-    //         processItem(infoWrapper, cardUrl, promises);
-    //     }
-    //
-    //     await Promise.all(promises);
-    // }
 
     // Функция для отслеживания изменений в лутбоксе
     function observeLootboxChanges() {
@@ -563,6 +516,7 @@
                 });
             });
         }
+
         console.log("Все want_card загружены");
         return await fetchPage(`${userProfileUrl}cards/need/page/${currentPage}/`);
     }
@@ -588,7 +542,6 @@
             return;
         }
 
-        observeThemeChanges();
         createUpdateButton();
 
         const userProfileUrl = `${baseUrl}user/${currentUsername}/`;
@@ -606,9 +559,6 @@
         if (document.querySelector(".history__item")) {
             await updateTradeHistoryInfo();
         }
-        //if (document.querySelector(".remelt__inventory-list")) {
-        //    await updateRemeltInfo();
-        //}
 
         const lootboxList = document.querySelector('.lootbox__list');
         if (lootboxList) {

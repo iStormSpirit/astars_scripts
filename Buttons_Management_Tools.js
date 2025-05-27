@@ -5,6 +5,7 @@
 // @description  Adds buttons: delete cards, lock all cards, unlock all cards, share all cards, pagination navigation, clear search
 // @author       George
 // @match        https://asstars.tv/user/*/cards/*
+// @match        https://as1.asstars.tv/*/cards/*
 // @match        https://asstars.club/user/*/cards/*
 // @match        https://astars.club/user/*/cards/*
 // @match        https://animestars.org/user/*/cards/*

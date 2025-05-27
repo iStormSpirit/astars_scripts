@@ -5,6 +5,7 @@
 // @description  Автоматизация донатов, отключение звука при донате
 // @author       George
 // @match        https://asstars.tv/clubs/6/boost/
+// @match        https://as1.asstars.tv/clubs/6/boost/
 // @match        https://asstars.club/clubs/6/boost/
 // @match        https://astars.club/clubs/6/boost/
 // @match        https://animestars.org/clubs/6/boost/
@@ -74,7 +75,7 @@
     setInterval(() => {
         if (isActivated) {
             refreshCard();
-            setTimeout(donateCard, 5);
+            setTimeout(donateCard, 250);
         }
-    }, 10);
+    }, 500);
 })();

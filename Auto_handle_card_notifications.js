@@ -5,6 +5,7 @@
 // @description  Автоматически нажимает уведомления и закрывает карточные окна. Можно включать/выключать кнопкой.
 // @author       George
 // @match        https://asstars.tv/aniserials/videos/*
+// @match        https://as1.asstars.tv/aniserials/videos/*
 // @match        https://asstars.club/aniserials/videos/*
 // @match        https://astars.club/aniserials/videos/*
 // @match        https://animestars.org/aniserials/videos/*

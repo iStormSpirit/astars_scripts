@@ -5,6 +5,7 @@
 // @description  Изменяет визуальный вид переплавки карт
 // @author       George
 // @match        https://asstars.tv/cards_remelt/*
+// @match        https://as1.asstars.tv/cards_remelt/*
 // @match        https://asstars.club/cards_remelt/*
 // @match        https://astars.club/cards_remelt/*
 // @match        https://animestars.org/cards_remelt/*

@@ -5,6 +5,7 @@
 // @description  Изменяет визуальный вид паков карт (удаляет хуйню и делает его адекватным)
 // @author       George
 // @match        https://asstars.tv/cards/pack/
+// @match        https://as1.asstars.tv/cards/pack/
 // @match        https://asstars.club/cards/pack/
 // @match        https://astars.club/cards/pack/
 // @match        https://animestars.org/cards/pack/
