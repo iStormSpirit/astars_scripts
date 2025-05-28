@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Buttons Management Tools (Updated)
 // @namespace    http://tampermonkey.net/
-// @version      1.4
+// @version      1.5
 // @description  Updated for new UI: delete cards, lock/unlock all, share all, pagination, clear search
 // @author       George
 // @match        https://asstars.tv/user/*/cards/*
@@ -184,8 +184,8 @@
             lockCards();
         });
 
-        container.prepend(lockBtn);
         container.prepend(unlockBtn);
+        container.prepend(lockBtn);
     }
 
     function waitForElement(selector, callback, timeout = 10000) {
