@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cards Fast Info Rate Cache
 // @namespace    http://tampermonkey.net/
-// @version      1.8
+// @version      1.81
 // @description  Информация о картах для обновленного сайта, need / have / trade / want list
 // @description  Отображение: профиль, карты, обмен, история обмена, паки карт, все карты из анимэ. библиотке карт, обновление списка желаемого.
 // @author       George
@@ -341,7 +341,7 @@
 
         for (let card of cards) {
             let link = card.getAttribute("href");
-            let cardId = link.split("/")[2];
+            let cardId = link.split("=")[1];
             let cardUrl = `${baseUrl}cards/users/?id=${cardId}`;
             processItem(card, cardUrl, promises);
 
@@ -410,7 +410,7 @@
 
             for (let item of batch) {
                 let href = item.getAttribute('href');
-                let cardId = href.split('/')[2];
+                let cardId = href.split('=')[1];
                 let cardUrl = `${baseUrl}cards/users/?id=${cardId}`;
 
                 processItem(item, cardUrl, promises);
