@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cards Fast Info Rate Cache
 // @namespace    http://tampermonkey.net/
-// @version      1.6
+// @version      1.7
 // @description  Информация о картах для обновленного сайта, need / have / trade / want list
 // @description  Отображение: профиль, карты, обмен, история обмена, паки карт, все карты из анимэ. библиотке карт, обновление списка желаемого.
 // @author       George
@@ -295,7 +295,7 @@
         for (let card of cards) {
             let link = card.getAttribute("href");
             let cardId = link.split("/")[2];
-            let cardUrl = `${baseUrl}cards/${cardId}/users/`;
+            let cardUrl = `${baseUrl}cards/users/?id=${cardId}`;
             processItem(card, cardUrl, promises);
 
             const want_card = getWantCardFromCache("want_card");
@@ -319,7 +319,7 @@
 
             for (let card of batch) {
                 let cardId = card.querySelector('.anime-cards__item').getAttribute('data-id');
-                let cardUrl = `${baseUrl}cards/${cardId}/users/`;
+                let cardUrl = `${baseUrl}cards/users/?id=${cardId}`;
 
                 if (wantCards && wantCards.includes(cardId)) {
                     card.classList.add('anime-cards__wanted-by-user');
@@ -343,7 +343,7 @@
 
             for (let card of batch) {
                 let cardId = card.querySelector('.anime-cards__item').getAttribute('data-id');
-                let cardUrl = `${baseUrl}cards/${cardId}/users/`;
+                let cardUrl = `${baseUrl}cards/users/?id=${cardId}`;
 
                 processItem(card, cardUrl, promises);
             }
@@ -364,7 +364,7 @@
             for (let item of batch) {
                 let href = item.getAttribute('href');
                 let cardId = href.split('/')[2];
-                let cardUrl = `${baseUrl}cards/${cardId}/users/`;
+                let cardUrl = `${baseUrl}cards/users/?id=${cardId}`;
 
                 processItem(item, cardUrl, promises);
 
@@ -435,7 +435,7 @@
                 oldInfo.remove();
             }
 
-            const cardUrl = `${baseUrl}cards/${cardId}/users/`;
+            const cardUrl = `${baseUrl}cards/users/?id=${cardId}`;
 
             processItem(card, cardUrl, promises);
 
