@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cards Fast Info Rate Cache
 // @namespace    http://tampermonkey.net/
-// @version      1.7
+// @version      1.8
 // @description  Информация о картах для обновленного сайта, need / have / trade / want list
 // @description  Отображение: профиль, карты, обмен, история обмена, паки карт, все карты из анимэ. библиотке карт, обновление списка желаемого.
 // @author       George
@@ -21,9 +21,9 @@
     let baseUrl = '';
     const CACHE_EXPIRATION_TIME = 60 * 60 * 1000; // 1 час в миллисекундах
     const WANT_CARD_CACHE_EXPIRATION_TIME = 60 * 60 * 1000; // 1 час в миллисекундах
-    const DELAY_REQUEST = 100
+    const DELAY_REQUEST = 2000
     const DELAY_REQUEST_FULL_CARDS = 500
-    const BATCH_SIZE = 14
+    const BATCH_SIZE = 1
 
     function saveToCache(key, data, expirationTime) {
         const cacheData = {
@@ -169,11 +169,58 @@
         tradeContainer.style.alignItems = 'center';
         tradeContainer.style.justifyContent = 'center';
 
+        needContainer.style.whiteSpace = 'nowrap';
+        haveContainer.style.whiteSpace = 'nowrap';
+        tradeContainer.style.whiteSpace = 'nowrap';
+
         infoContainer.appendChild(needContainer);
         infoContainer.appendChild(haveContainer);
         infoContainer.appendChild(tradeContainer);
 
         return {infoContainer, needContainer, haveContainer, tradeContainer};
+    }
+
+    function createInfoCardButton(userProfileUrl) {
+        const button = document.createElement('button');
+        button.id = 'info-card-btn';
+        button.textContent = 'INFO CARD';
+        button.style.position = 'fixed';
+        button.style.bottom = '60px';
+        button.style.left = '20px';
+        button.style.zIndex = '9999';
+        button.style.padding = '8px 12px';
+        button.style.backgroundColor = 'rgba(0, 128, 255, 0.7)';
+        button.style.color = 'white';
+        button.style.border = 'none';
+        button.style.borderRadius = '5px';
+        button.style.cursor = 'pointer';
+        button.style.fontSize = '12px';
+
+        button.addEventListener('click', async function () {
+            button.textContent = 'INFO LOADING...';
+
+            await fetchAllWantCards(userProfileUrl); // подгрузим список want-карт
+
+            if (document.querySelector('.anime-cards__item-wrapper')) {
+                await updateCardInfo();
+            }
+            if (document.querySelector('.anime-cards--full-page')) {
+                await updateFullPageCardsInfo();
+            }
+            if (document.querySelector('.trade__main-items')) {
+                await updateTradeItemsInfo();
+            }
+            if (document.querySelector(".history__item")) {
+                await updateTradeHistoryInfo();
+            }
+
+            button.textContent = 'INFO CARD DONE';
+            setTimeout(() => {
+                button.textContent = 'INFO CARD';
+            }, 3000);
+        });
+
+        document.body.appendChild(button);
     }
 
     // Функция для определения цвета фона на основе соотношения need и trade
@@ -546,6 +593,7 @@
 
         const userProfileUrl = `${baseUrl}user/${currentUsername}/`;
         await fetchAllWantCards(userProfileUrl);
+        // createInfoCardButton(userProfileUrl);
 
         if (document.querySelector('.anime-cards__item-wrapper')) {
             await updateCardInfo();
