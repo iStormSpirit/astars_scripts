@@ -10,6 +10,12 @@
 // @match        https://astars.club/user/*/cards/*
 // @match        https://asstars1.astars.club/user/*/cards/*
 // @match        https://as1.astars.club/user/*/cards/*
+// @match        https://asstars.tv/user/cards/*
+// @match        https://as1.asstars.tv/user/cards/*
+// @match        https://animestars.org/user/cards/*
+// @match        https://astars.club/user/cards/*
+// @match        https://asstars1.astars.club/user/cards/*
+// @match        https://as1.astars.club/user/cards/*
 // @grant        none
 // ==/UserScript==
 
