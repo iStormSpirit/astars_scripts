@@ -11,6 +11,7 @@
 // @match        https://animestars.org/clubs/boost/?id=6
 // @match        https://as1.astars.club/clubs/boost/?id=6
 // @match        https://asstars1.astars.club/clubs/boost/?id=6
+// @match        https://as2.asstars.tv/clubs/boost/?id=6
 // @grant        none
 // @updateURL    https://raw.githubusercontent.com/iStormSpirit/astars_scripts/master/Auto_refresh_and_donate.user.js
 // @downloadURL  https://raw.githubusercontent.com/iStormSpirit/astars_scripts/master/Auto_refresh_and_donate.user.js

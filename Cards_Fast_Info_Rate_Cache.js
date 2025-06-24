@@ -5,13 +5,13 @@
 // @description  Информация о картах для обновленного сайта, need / have / trade / want list
 // @description  Отображение: профиль, карты, обмен, история обмена, паки карт, все карты из анимэ. библиотке карт, обновление списка желаемого.
 // @author       George
-// @match        https://asstars.tv/*
 // @match        https://as1.asstars.tv/*
 // @match        https://asstars.club/*
 // @match        https://astars.club/*
 // @match        https://animestars.org/*
 // @match        https://as1.astars.club/*
 // @match        https://asstars1.astars.club/*
+// @match        https://as2.asstars.tv/*
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
 

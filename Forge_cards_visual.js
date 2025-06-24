@@ -11,6 +11,7 @@
 // @match        https://animestars.org/cards_remelt/*
 // @match        https://as1.astars.club/cards_remelt/*
 // @match        https://asstars1.astars.club/cards_remelt/*
+// @match        https://as2.asstars.tv/cards_remelt/*
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
 

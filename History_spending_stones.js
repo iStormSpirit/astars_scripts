@@ -11,7 +11,7 @@
 // @match        https://animestars.org/transactions/*
 // @match        https://as1.astars.club/transactions/*
 // @match        https://asstars1.astars.club/transactions/*
-
+// @match        https://as2.asstars.tv/transactions/*
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // ==/UserScript==

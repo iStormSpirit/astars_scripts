@@ -11,6 +11,7 @@
 // @match        https://animestars.org/cards/pack/
 // @match        https://as1.astars.club/cards/pack/
 // @match        https://asstars1.astars.club/cards/pack/
+// @match        https://as2.asstars.tv/cards/pack/
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
 

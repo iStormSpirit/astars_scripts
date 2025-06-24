@@ -11,6 +11,7 @@
 // @match        https://animestars.org/aniserials/videos/*
 // @match        https://as1.astars.club/aniserials/videos/*
 // @match        https://asstars1.astars.club/aniserials/videos/*
+// @match        https://as2.asstars.tv/aniserials/videos/*
 // @grant        none
 // ==/UserScript==
 

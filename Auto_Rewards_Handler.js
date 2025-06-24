@@ -11,6 +11,7 @@
 // @match        https://animestars.org/*
 // @match        https://as1.astars.club/*
 // @match        https://asstars1.astars.club/*
+// @match        https://as2.asstars.tv/*
 // @grant        none
 // ==/UserScript==
 
